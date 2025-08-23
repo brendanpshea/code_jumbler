@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Code Jumbler</title>
+    <style>
+        body {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .directions {
+            background: #e8f4f8;
+            border: 1px solid #bee5eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .directions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .directions h2 {
+            color: #0c5460;
+            margin: 0;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #6c757d;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+        
+        .close-btn:hover {
+            background-color: rgba(0,0,0,0.1);
+            color: #495057;
+        }
+        
+        .show-directions-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .directions ol {
+            color: #495057;
+            line-height: 1.6;
+        }
+        
+        .directions li {
+            margin-bottom: 8px;
+        }
+        
+        .directions ul {
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 12px;
+            margin-top: 15px;
+            color: #856404;
+        }
+        
+        .program-selector {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .selector-row {
+            margin-bottom: 15px;
+        }
+        
+        .load-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .load-section label {
+            white-space: nowrap;
+        }
+        
+        #problem-set-url {
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-width: 300px;
+        }
+        
+        .load-btn {
+            padding: 8px 16px !important;
+            font-size: 14px !important;
+            margin: 0 !important;
+        }
+        
+        .program-selector select {
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .loading-indicator {
+            color: #666;
+            font-style: italic;
+            margin-top: 10px;
+        }
+        
+        .error-message {
+            color: #d32f2f;
+            background: #ffebee;
+            border: 1px solid #ffcdd2;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .success-message {
+            color: #2e7d32;
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .program-section {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .jumbled-code, .answer-section {
+            flex: 1;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #444;
+        }
+        
+        .code-line {
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .line-number {
+            color: #666;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .comment-line {
+            background: #e8f5e8;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .answer-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        
+        .answer-input.correct {
+            border-color: #4CAF50;
+            background-color: #f8fff8;
+        }
+        
+        .answer-input.incorrect {
+            border-color: #f44336;
+            background-color: #fff8f8;
+        }
+        
+        .controls {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background: #0056b3;
+        }
+        
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+        }
+        
+        .results.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .results.partial {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        @media (max-width: 768px) {
+            .program-section {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Java Code Jumbler</h1>
+        
+        <div class="directions" id="directions">
+            <div class="directions-header">
+                <h2>How to Play:</h2>
+                <button class="close-btn" id="close-directions">&times;</button>
+            </div>
+            <ol>
+                <li><strong>Study the jumbled code:</strong> Each line shows Java code with words and symbols mixed up randomly.</li>
+                <li><strong>Unjumble the lines:</strong> Type the correct Java code in the answer boxes. Put the words and symbols in the right order.</li>
+                <li><strong>Skip certain lines:</strong> You don't need to unjumble:
+                    <ul>
+                        <li>Comment lines (starting with //)</li>
+                        <li>Lines with just one character (like } or {)</li>
+                    </ul>
+                </li>
+                <li><strong>Check your work:</strong> Click "Check Answers" to see which lines are correct (green) or incorrect (red).</li>
+                <li><strong>Keep trying:</strong> Fix any incorrect lines and check again until you get them all right!</li>
+                <li><strong>Practice more:</strong> Use "Next Problem" to move to a different program, or choose a specific program from the dropdown.</li>
+            </ol>
+            
+            <div class="tip">
+                <strong>💡 Tip:</strong> Pay attention to Java syntax rules - where do semicolons go? How are method calls structured? What's the proper order of keywords?
+            </div>
+        </div>
+        
+        <div class="show-directions-container" id="show-directions-container" style="display: none;">
+            <button class="btn" id="show-directions">Show Directions</button>
+        </div>
+        
+        <div class="program-selector">
+            <div class="selector-row">
+                <label for="program-select">Choose a program: </label>
+                <select id="program-select">
+                    <option value="helloWorld">Hello World</option>
+                    <option value="simpleLoop">Simple Loop</option>
+                    <option value="calculator">Simple Calculator</option>
+                </select>
+            </div>
+            <div class="load-section">
+                <label for="problem-set-url">Load Problem Set from URL: </label>
+                <input type="url" id="problem-set-url" placeholder="https://example.com/problems.json">
+                <button class="btn load-btn" id="load-btn">Load</button>
+            </div>
+        </div>
+        
+        <div class="program-section">
+            <div class="jumbled-code">
+                <div class="section-title">Jumbled Code:</div>
+                <div id="jumbled-lines"></div>
+            </div>
+            
+            <div class="answer-section">
+                <div class="section-title">Your Answers:</div>
+                <div id="answer-inputs"></div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" id="check-btn">Check Answers</button>
+            <button class="btn" id="reset-btn">Reset</button>
+            <button class="btn" id="next-problem-btn">Next Problem</button>
+        </div>
+        
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        // Sample Java programs - default problems
+        const defaultPrograms = {
+            helloWorld: {
+                id: "helloWorld",
+                title: "Hello World",
+                description: "Basic Java program structure",
+                difficulty: "beginner",
+                code: [
+                    "public class HelloWorld {",
+                    "    // This is a simple Hello World program",
+                    "    public static void main(String[] args) {",
+                    "        System.out.println(\"Hello, World!\");",
+                    "    }",
+                    "}"
+                ]
+            },
+            simpleLoop: {
+                id: "simpleLoop",
+                title: "Simple Loop",
+                description: "Introduction to for loops",
+                difficulty: "beginner",
+                code: [
+                    "public class SimpleLoop {",
+                    "    // This program prints numbers 1 to 5",
+                    "    public static void main(String[] args) {",
+                    "        for (int i = 1; i <= 5; i++) {",
+                    "            System.out.println(\"Number: \" + i);",
+                    "        }",
+                    "    }",
+                    "}"
+                ]
+            },
+            calculator: {
+                id: "calculator",
+                title: "Simple Calculator",
+                description: "Variables and basic operations",
+                difficulty: "beginner",
+                code: [
+                    "public class Calculator {",
+                    "    // Simple calculator with basic operations",
+                    "    public static void main(String[] args) {",
+                    "        int a = 10;",
+                    "        int b = 5;",
+                    "        // Addition operation",
+                    "        int sum = a + b;",
+                    "        System.out.println(\"Sum: \" + sum);",
+                    "    }",
+                    "}"
+                ]
+            }
+        };
+        
+        let programs = { ...defaultPrograms }; // Current available programs
+        let currentProgram = '';
+        let originalLines = [];
+        let jumbledLines = [];
+        let correctAnswers = [];
+        
+        // Initialize the application
+        function init() {
+            const programSelect = document.getElementById('program-select');
+            programSelect.addEventListener('change', loadProgram);
+            
+            document.getElementById('check-btn').addEventListener('click', checkAnswers);
+            document.getElementById('reset-btn').addEventListener('click', resetAnswers);
+            document.getElementById('next-problem-btn').addEventListener('click', nextProblem);
+            
+            // Directions toggle functionality
+            document.getElementById('close-directions').addEventListener('click', hideDirections);
+            document.getElementById('show-directions').addEventListener('click', showDirections);
+            
+            // Problem set loading functionality
+            document.getElementById('load-btn').addEventListener('click', loadProblemSet);
+            
+            // Load the default program
+            loadProgram();
+        }
+        
+        // Hide the directions
+        function hideDirections() {
+            document.getElementById('directions').style.display = 'none';
+            document.getElementById('show-directions-container').style.display = 'block';
+        }
+        
+        // Show the directions
+        function showDirections() {
+            document.getElementById('directions').style.display = 'block';
+            document.getElementById('show-directions-container').style.display = 'none';
+        }
+        
+        // Load and display a program
+        function loadProgram() {
+            const programSelect = document.getElementById('program-select');
+            currentProgram = programSelect.value;
+            
+            originalLines = programs[currentProgram].code;
+            jumbleCode();
+            displayJumbledCode();
+            createAnswerInputs();
+            hideResults();
+        }
+        
+        // Jumble the code (shuffle tokens in each non-comment line)
+        function jumbleCode() {
+            jumbledLines = [];
+            correctAnswers = [];
+            
+            originalLines.forEach(line => {
+                const trimmedLine = line.trim();
+                if (trimmedLine.startsWith('//') || trimmedLine.length <= 1) {
+                    // Don't jumble comments or single character lines
+                    jumbledLines.push(line);
+                } else {
+                    // Jumble the line by shuffling tokens
+                    const jumbled = jumbleString(line);
+                    jumbledLines.push(jumbled);
+                    correctAnswers.push(line.trim());
+                }
+            });
+        }
+        
+        // Tokenize and shuffle tokens in a string while preserving leading spaces
+        function jumbleString(str) {
+            const leadingSpaces = str.match(/^(\s*)/)[0];
+            const content = str.slice(leadingSpaces.length);
+            
+            if (content.length <= 1) return str;
+            
+            // Tokenize the content into words and separators
+            const tokens = tokenize(content);
+            
+            if (tokens.length <= 1) return str;
+            
+            // Shuffle the tokens
+            const shuffledTokens = [...tokens];
+            for (let i = shuffledTokens.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledTokens[i], shuffledTokens[j]] = [shuffledTokens[j], shuffledTokens[i]];
+            }
+            
+            return leadingSpaces + shuffledTokens.join(' ');
+        }
+        
+        // Tokenize a string into words and separators
+        function tokenize(str) {
+            const tokens = [];
+            let currentToken = '';
+            const separators = ['(', ')', '{', '}', '[', ']', ';', ',', '.', '=', '+', '-', '*', '/', '<', '>', '!', '&', '|', ':', '"'];
+            
+            for (let i = 0; i < str.length; i++) {
+                const char = str[i];
+                
+                if (char === ' ' || char === '\t') {
+                    // End current token if we hit whitespace
+                    if (currentToken) {
+                        tokens.push(currentToken);
+                        currentToken = '';
+                    }
+                } else if (separators.includes(char)) {
+                    // End current token and add separator as its own token
+                    if (currentToken) {
+                        tokens.push(currentToken);
+                        currentToken = '';
+                    }
+                    
+                    // Handle string literals - keep them together
+                    if (char === '"') {
+                        let stringLiteral = '"';
+                        i++;
+                        while (i < str.length && str[i] !== '"') {
+                            stringLiteral += str[i];
+                            i++;
+                        }
+                        if (i < str.length) stringLiteral += '"'; // Add closing quote
+                        tokens.push(stringLiteral);
+                    } else {
+                        tokens.push(char);
+                    }
+                } else {
+                    // Add character to current token
+                    currentToken += char;
+                }
+            }
+            
+            // Don't forget the last token
+            if (currentToken) {
+                tokens.push(currentToken);
+            }
+            
+            return tokens.filter(token => token.length > 0);
+        }
+        
+        // Display the jumbled code
+        function displayJumbledCode() {
+            const container = document.getElementById('jumbled-lines');
+            container.innerHTML = '';
+            
+            jumbledLines.forEach((line, index) => {
+                const lineDiv = document.createElement('div');
+                const trimmedLine = line.trim();
+                
+                lineDiv.className = (trimmedLine.startsWith('//') || trimmedLine.length <= 1) ? 
+                    'code-line comment-line' : 'code-line';
+                
+                lineDiv.innerHTML = `<span class="line-number">${index + 1}:</span>${line}`;
+                container.appendChild(lineDiv);
+            });
+        }
+        
+        // Create answer input fields
+        function createAnswerInputs() {
+            const container = document.getElementById('answer-inputs');
+            container.innerHTML = '';
+            
+            jumbledLines.forEach((line, index) => {
+                const trimmedLine = line.trim();
+                if (!trimmedLine.startsWith('//') && trimmedLine.length > 1) {
+                    const inputDiv = document.createElement('div');
+                    inputDiv.innerHTML = `
+                        <div style="margin-bottom: 5px;">
+                            <span class="line-number">Line ${index + 1}:</span>
+                        </div>
+                        <input type="text" class="answer-input" 
+                               data-line="${index}" 
+                               placeholder="Enter the unjumbled code for line ${index + 1}">
+                    `;
+                    container.appendChild(inputDiv);
+                }
+            });
+        }
+        
+        // Check all answers
+        function checkAnswers() {
+            const inputs = document.querySelectorAll('.answer-input');
+            let correct = 0;
+            let total = 0;
+            
+            inputs.forEach(input => {
+                const lineIndex = parseInt(input.dataset.line);
+                const userAnswer = input.value.trim();
+                const correctAnswer = originalLines[lineIndex].trim();
+                
+                total++;
+                
+                if (userAnswer === correctAnswer) {
+                    input.className = 'answer-input correct';
+                    correct++;
+                } else {
+                    input.className = 'answer-input incorrect';
+                }
+            });
+            
+            showResults(correct, total);
+        }
+        
+        // Show results
+        function showResults(correct, total) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.style.display = 'block';
+            
+            if (correct === total) {
+                resultsDiv.className = 'results success';
+                resultsDiv.innerHTML = `🎉 Perfect! You got all ${total} lines correct!`;
+            } else {
+                resultsDiv.className = 'results partial';
+                resultsDiv.innerHTML = `You got ${correct} out of ${total} lines correct. Keep trying!`;
+            }
+        }
+        
+        // Hide results
+        function hideResults() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.style.display = 'none';
+        }
+        
+        // Reset all answers
+        function resetAnswers() {
+            const inputs = document.querySelectorAll('.answer-input');
+            inputs.forEach(input => {
+                input.value = '';
+                input.className = 'answer-input';
+            });
+            hideResults();
+        }
+        
+        // Move to the next problem (cycles through available programs)
+        function nextProblem() {
+            const programSelect = document.getElementById('program-select');
+            const currentIndex = programSelect.selectedIndex;
+            const nextIndex = (currentIndex + 1) % programSelect.options.length;
+            
+            programSelect.selectedIndex = nextIndex;
+            loadProgram();
+        }
+        
+        // Load problem set from URL
+        async function loadProblemSet() {
+            const urlInput = document.getElementById('problem-set-url');
+            const url = urlInput.value.trim();
+            
+            if (!url) {
+                showMessage('Please enter a URL', 'error');
+                return;
+            }
+            
+            // Show loading indicator
+            showMessage('Loading problem set...', 'loading');
+            
+            try {
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                // Validate the JSON structure
+                if (!data.problemSet || !data.problemSet.problems || !Array.isArray(data.problemSet.problems)) {
+                    throw new Error('Invalid problem set format. Expected problemSet.problems array.');
+                }
+                
+                // Clear existing programs and add defaults
+                programs = { ...defaultPrograms };
+                
+                // Add loaded problems
+                data.problemSet.problems.forEach(problem => {
+                    if (problem.id && problem.title && problem.code && Array.isArray(problem.code)) {
+                        programs[problem.id] = {
+                            id: problem.id,
+                            title: problem.title,
+                            description: problem.description || '',
+                            difficulty: problem.difficulty || 'unknown',
+                            code: problem.code
+                        };
+                    }
+                });
+                
+                // Update the dropdown
+                updateProgramDropdown();
+                
+                // Show success message
+                const problemCount = data.problemSet.problems.length;
+                showMessage(`Successfully loaded ${problemCount} problems from "${data.problemSet.title || 'Problem Set'}"`, 'success');
+                
+                // Load the first program from the set
+                const firstProblem = Object.keys(programs).find(key => key !== 'helloWorld' && key !== 'simpleLoop' && key !== 'calculator');
+                if (firstProblem) {
+                    document.getElementById('program-select').value = firstProblem;
+                    loadProgram();
+                }
+                
+            } catch (error) {
+                console.error('Error loading problem set:', error);
+                showMessage(`Error loading problem set: ${error.message}`, 'error');
+            }
+        }
+        
+        // Update the program dropdown with current programs
+        function updateProgramDropdown() {
+            const select = document.getElementById('program-select');
+            const currentValue = select.value;
+            
+            // Clear existing options
+            select.innerHTML = '';
+            
+            // Add all programs
+            Object.entries(programs).forEach(([key, program]) => {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = program.title;
+                select.appendChild(option);
+            });
+            
+            // Restore selection if it still exists
+            if (programs[currentValue]) {
+                select.value = currentValue;
+            } else {
+                select.selectedIndex = 0;
+            }
+        }
+        
+        // Show message to user
+        function showMessage(message, type) {
+            // Remove existing message
+            const existingMessage = document.querySelector('.message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+            
+            // Create new message element
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type === 'error' ? 'error-message' : 
+                                             type === 'success' ? 'success-message' : 'loading-indicator'}`;
+            messageDiv.textContent = message;
+            
+            // Insert after the load section
+            const loadSection = document.querySelector('.load-section');
+            loadSection.parentNode.insertBefore(messageDiv, loadSection.nextSibling);
+            
+            // Auto-hide success and loading messages after 3 seconds
+            if (type === 'success' || type === 'loading') {
+                setTimeout(() => {
+                    if (messageDiv.parentNode) {
+                        messageDiv.remove();
+                    }
+                }, 3000);
+            }
+        }
+        
+        // Start the application
+        init();
+    </script>
+</body>
+</html>
