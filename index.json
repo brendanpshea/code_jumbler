@@ -4,6 +4,11 @@
       "filename": "jumble_01.json",
       "title": "Java Basics - Chapter 1",
       "description": "Variables, data types, and basic operations"
+    },
+    {
+      "filename": "jumble_02.json",
+      "title": "Java Control Structures & Arrays - Chapter 2",
+      "description": "Conditionals, loops, arrays, and compound logic exercises based on Moe's Tavern theme"
     }
   ]
 }

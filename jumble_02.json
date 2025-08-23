@@ -1,0 +1,199 @@
+{
+  "problemSet": {
+    "title": "Java Control Structures & Arrays - Chapter 2",
+    "description": "Conditionals, loops, arrays, and compound logic exercises based on Moe's Tavern theme",
+    "version": "1.0",
+    "problems": [
+      {
+        "id": "simple_if",
+        "title": "Basic Age Check",
+        "description": "Simple if statement for age verification",
+        "difficulty": "beginner",
+        "code": [
+          "public class SimpleAgeCheck {",
+          "    // This class demonstrates basic age verification for tavern entry",
+          "    public static void main(String[] args) {",
+          "        // Customer information",
+          "        int customerAge = 25;",
+          "        // Check if customer can drink",
+          "        if (customerAge >= 21) {",
+          "            System.out.println(\"Welcome to Moe's Tavern!\");",
+          "        }",
+          "        System.out.println(\"Have a great day!\");",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "if_else_basic",
+        "title": "ID Verification System",
+        "description": "Using if-else for binary decisions",
+        "difficulty": "beginner",
+        "code": [
+          "public class IDVerification {",
+          "    // This class handles customer ID verification at the tavern entrance",
+          "    public static void main(String[] args) {",
+          "        // Customer details",
+          "        boolean hasID = true;",
+          "        int customerAge = 19;",
+          "        // Check age and ID status",
+          "        if (customerAge >= 21) {",
+          "            System.out.println(\"Age verified - welcome!\");",
+          "        } else {",
+          "            System.out.println(\"Sorry, must be 21 or older\");",
+          "        }",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "multiple_conditions",
+        "title": "Happy Hour Pricing",
+        "description": "Using else if for multiple time-based conditions",
+        "difficulty": "beginner",
+        "code": [
+          "public class HappyHourPricing {",
+          "    // This class calculates drink prices based on current time",
+          "    public static void main(String[] args) {",
+          "        // Time and pricing info",
+          "        int currentHour = 18;",
+          "        double beerPrice = 5.00;",
+          "        // Determine pricing based on time",
+          "        if (currentHour >= 17 && currentHour < 19) {",
+          "            beerPrice = beerPrice * 0.5;",
+          "            System.out.println(\"Happy hour price: $\" + beerPrice);",
+          "        } else if (currentHour >= 22) {",
+          "            System.out.println(\"Late night menu only\");",
+          "        } else {",
+          "            System.out.println(\"Regular price: $\" + beerPrice);",
+          "        }",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "compound_conditionals",
+        "title": "VIP Member Check",
+        "description": "Using AND and OR operators in conditions",
+        "difficulty": "intermediate",
+        "code": [
+          "public class VIPMemberCheck {",
+          "    // This class determines VIP treatment eligibility for customers",
+          "    public static void main(String[] args) {",
+          "        // Customer status",
+          "        boolean isMember = true;",
+          "        double totalSpent = 75.00;",
+          "        int loyaltyPoints = 150;",
+          "        // Check for VIP treatment eligibility",
+          "        if ((isMember && totalSpent >= 50.00) || loyaltyPoints >= 100) {",
+          "            System.out.println(\"VIP treatment activated!\");",
+          "            System.out.println(\"Free appetizer included\");",
+          "        } else {",
+          "            System.out.println(\"Regular service\");",
+          "        }",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "basic_arrays",
+        "title": "Drink Menu Array",
+        "description": "Creating and accessing arrays",
+        "difficulty": "intermediate",
+        "code": [
+          "public class DrinkMenuArray {",
+          "    // This class manages tavern menu data using arrays",
+          "    public static void main(String[] args) {",
+          "        // Create menu arrays - items arranged alphabetically for clarity",
+          "        String[] drinkNames = {\"Duff Beer\", \"House Wine\", \"Well Whiskey\"};",
+          "        // Prices arranged from lowest to highest to match drink order",
+          "        double[] prices = {3.50, 5.00, 6.00};",
+          "        // Display featured drink",
+          "        System.out.println(\"Featured drink: \" + drinkNames[0]);",
+          "        System.out.println(\"Price: $\" + prices[0]);",
+          "        // Show menu size",
+          "        System.out.println(\"Total menu items: \" + drinkNames.length);",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "for_loop_basic",
+        "title": "Customer Greeting Loop",
+        "description": "Basic for loop with counting",
+        "difficulty": "intermediate",
+        "code": [
+          "public class CustomerGreeting {",
+          "    // This class demonstrates greeting multiple customers using a loop",
+          "    public static void main(String[] args) {",
+          "        // Greet customers as they arrive",
+          "        System.out.println(\"Opening Moe's Tavern!\");",
+          "        // Welcome first 5 customers",
+          "        for (int customer = 1; customer <= 5; customer++) {",
+          "            System.out.println(\"Welcome customer #\" + customer + \"!\");",
+          "        }",
+          "        System.out.println(\"Busy night ahead!\");",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "array_loop_processing",
+        "title": "Menu Display System",
+        "description": "Using for loops to process arrays",
+        "difficulty": "intermediate",
+        "code": [
+          "public class MenuDisplaySystem {",
+          "    // This class displays a complete menu using arrays and loops",
+          "    public static void main(String[] args) {",
+          "        // Menu data - drinks arranged alphabetically",
+          "        String[] drinks = {\"Duff Beer\", \"Guinness\", \"House Wine\", \"Soda\"};",
+          "        // Prices arranged from lowest to highest",
+          "        double[] prices = {2.00, 3.50, 5.50, 6.00};",
+          "        // Display complete menu",
+          "        System.out.println(\"=== MOE'S TAVERN MENU ===\");",
+          "        for (int i = 0; i < drinks.length; i++) {",
+          "            System.out.println((i + 1) + \". \" + drinks[i] + \" - $\" + prices[i]);",
+          "        }",
+          "        System.out.println(\"Enjoy your visit!\");",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "inventory_system",
+        "title": "Stock Alert System",
+        "description": "Complex array processing with conditionals in loops",
+        "difficulty": "advanced",
+        "code": [
+          "public class StockAlertSystem {",
+          "    // This class monitors inventory levels and generates stock alerts",
+          "    public static void main(String[] args) {",
+          "        // Inventory data - items arranged alphabetically",
+          "        String[] items = {\"Duff Beer\", \"Guinness\", \"House Wine\", \"Pretzels\"};",
+          "        // Stock levels arranged from lowest to highest for easy comparison",
+          "        int[] stockLevels = {5, 8, 25, 45};",
+          "        int lowStockCount = 0;",
+          "        // Check inventory levels",
+          "        System.out.println(\"=== INVENTORY REPORT ===\");",
+          "        for (int i = 0; i < items.length; i++) {",
+          "            if (stockLevels[i] <= 10) {",
+          "                System.out.println(\"LOW STOCK: \" + items[i] + \" - only \" + stockLevels[i] + \" left!\");",
+          "                lowStockCount++;",
+          "            } else {",
+          "                System.out.println(\"OK: \" + items[i] + \" - \" + stockLevels[i] + \" in stock\");",
+          "            }",
+          "        }",
+          "        // Summary report",
+          "        if (lowStockCount > 0) {",
+          "            System.out.println(\"Warning: \" + lowStockCount + \" items need restocking!\");",
+          "        } else {",
+          "            System.out.println(\"All inventory levels are good!\");",
+          "        }",
+          "    }",
+          "}"
+        ]
+      }
+    ]
+  }
+}
