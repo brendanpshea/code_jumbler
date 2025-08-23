@@ -1,0 +1,163 @@
+{
+  "problemSet": {
+    "title": "Java Fundamentals - Chapter 1",
+    "description": "Basic Java programming exercises covering Hello World, variables, and simple operations",
+    "version": "1.0",
+    "problems": [
+      {
+        "id": "hello_coffee",
+        "title": "Hello Coffee Shop",
+        "description": "Simple Hello World program with coffee shop greeting",
+        "difficulty": "beginner",
+        "code": [
+          "public class HelloCoffee {",
+          "    // Main method - program starts here",
+          "    public static void main(String[] args) {",
+          "        // Display welcome message to customers",
+          "        System.out.println(\"Welcome to Java Coffee Shop!\");",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "coffee_message",
+        "title": "Coffee Shop Messages",
+        "description": "Multiple print statements for coffee shop information",
+        "difficulty": "beginner",
+        "code": [
+          "public class CoffeeMessages {",
+          "    public static void main(String[] args) {",
+          "        // Welcome message",
+          "        System.out.println(\"Welcome to Java Coffee Shop!\");",
+          "        // Today's featured drink",
+          "        System.out.println(\"Today's special: Caramel Macchiato\");",
+          "        // Store hours information",
+          "        System.out.println(\"Hours: Monday-Friday 6AM-8PM\");",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "simple_variables",
+        "title": "Coffee Shop Variables",
+        "description": "Basic variable declaration and usage",
+        "difficulty": "beginner",
+        "code": [
+          "public class SimpleVariables {",
+          "    public static void main(String[] args) {",
+          "        // Store coffee information in variables",
+          "        String coffeeName = \"Espresso\";",
+          "        double price = 2.50;",
+          "        // Display the coffee information",
+          "        System.out.println(\"Coffee: \" + coffeeName);",
+          "        System.out.println(\"Price: $\" + price);",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "customer_order",
+        "title": "Customer Order Info",
+        "description": "Using different data types for customer information",
+        "difficulty": "beginner",
+        "code": [
+          "public class CustomerOrder {",
+          "    public static void main(String[] args) {",
+          "        // Customer information",
+          "        String customerName = \"Alice\";",
+          "        String drinkOrder = \"Latte\";",
+          "        int quantity = 2;",
+          "        boolean isHot = true;",
+          "        // Display order details",
+          "        System.out.println(\"Customer: \" + customerName);",
+          "        System.out.println(\"Order: \" + quantity + \" \" + drinkOrder);",
+          "        System.out.println(\"Hot drink: \" + isHot);",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "price_calculation",
+        "title": "Simple Price Calculation",
+        "description": "Basic arithmetic with coffee prices",
+        "difficulty": "intermediate",
+        "code": [
+          "public class PriceCalculation {",
+          "    public static void main(String[] args) {",
+          "        // Order details",
+          "        double coffeePrice = 3.50;",
+          "        int quantity = 2;",
+          "        // Calculate total using multiplication",
+          "        double total = coffeePrice * quantity;",
+          "        // Display order summary",
+          "        System.out.println(\"Coffee price: $\" + coffeePrice);",
+          "        System.out.println(\"Quantity: \" + quantity);",
+          "        System.out.println(\"Total: $\" + total);",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "order_with_tax",
+        "title": "Order Total with Tax",
+        "description": "Calculate subtotal, tax, and final total",
+        "difficulty": "intermediate",
+        "code": [
+          "public class OrderWithTax {",
+          "    public static void main(String[] args) {",
+          "        // Order information",
+          "        double lattePrice = 4.50;",
+          "        int quantity = 2;",
+          "        // Calculate subtotal",
+          "        double subtotal = lattePrice * quantity;",
+          "        // Calculate tax (8% rate)",
+          "        double taxRate = 0.08;",
+          "        double tax = subtotal * taxRate;",
+          "        // Calculate final total",
+          "        double total = subtotal + tax;",
+          "        // Display receipt breakdown",
+          "        System.out.println(\"Subtotal: $\" + subtotal);",
+          "        System.out.println(\"Tax: $\" + tax);",
+          "        System.out.println(\"Total: $\" + total);",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "coffee_shop_receipt",
+        "title": "Coffee Shop Receipt",
+        "description": "Complete receipt with multiple items and calculations",
+        "difficulty": "intermediate",
+        "code": [
+          "public class CoffeeShopReceipt {",
+          "    public static void main(String[] args) {",
+          "        // Customer and menu information",
+          "        String customerName = \"John\";",
+          "        double lattePrice = 4.50;",
+          "        double muffinPrice = 2.25;",
+          "        int latteQuantity = 2;",
+          "        int muffinQuantity = 1;",
+          "        // Calculate line totals for each item",
+          "        double latteTotal = lattePrice * latteQuantity;",
+          "        double muffinTotal = muffinPrice * muffinQuantity;",
+          "        // Calculate order subtotal",
+          "        double subtotal = latteTotal + muffinTotal;",
+          "        // Calculate tax (8.5% rate)",
+          "        double tax = subtotal * 0.085;",
+          "        // Calculate final total",
+          "        double finalTotal = subtotal + tax;",
+          "        // Display formatted receipt",
+          "        System.out.println(\"=== JAVA COFFEE SHOP ===\");",
+          "        System.out.println(\"Customer: \" + customerName);",
+          "        System.out.println(\"2 Lattes: $\" + latteTotal);",
+          "        System.out.println(\"1 Muffin: $\" + muffinTotal);",
+          "        System.out.println(\"Subtotal: $\" + subtotal);",
+          "        System.out.println(\"Tax: $\" + tax);",
+          "        System.out.println(\"TOTAL: $\" + finalTotal);",
+          "    }",
+          "}"
+        ]
+      }
+    ]
+  }
+}
