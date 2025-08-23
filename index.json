@@ -1,0 +1,9 @@
+{
+  "problemSets": [
+    {
+      "filename": "jumble_01.json",
+      "title": "Java Basics - Chapter 1",
+      "description": "Variables, data types, and basic operations"
+    }
+  ]
+}

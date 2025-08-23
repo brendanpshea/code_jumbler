@@ -96,6 +96,24 @@
             color: #856404;
         }
         
+        .url-tip {
+            background: #e8f4fd;
+            border: 1px solid #b6d7ff;
+            border-radius: 6px;
+            padding: 12px;
+            margin-top: 10px;
+            color: #0c5460;
+            font-size: 14px;
+        }
+        
+        .url-tip code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            color: #d63384;
+        }
+        
         .program-selector {
             margin-bottom: 20px;
             text-align: center;
@@ -105,30 +123,21 @@
             margin-bottom: 15px;
         }
         
-        .load-section {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
+        .problem-set-section {
+            margin-bottom: 15px;
         }
         
-        .load-section label {
+        .problem-set-section label {
             white-space: nowrap;
         }
         
-        #problem-set-url {
+        #problem-set-select {
             padding: 8px 12px;
             font-size: 14px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            min-width: 300px;
-        }
-        
-        .load-btn {
-            padding: 8px 16px !important;
-            font-size: 14px !important;
-            margin: 0 !important;
+            min-width: 200px;
+            margin-right: 10px;
         }
         
         .program-selector select {
@@ -248,6 +257,12 @@
             cursor: not-allowed;
         }
         
+        .load-btn {
+            padding: 8px 16px !important;
+            font-size: 14px !important;
+            margin: 0 !important;
+        }
+        
         .results {
             margin-top: 20px;
             padding: 15px;
@@ -298,7 +313,12 @@
             </ol>
             
             <div class="tip">
-                <strong>💡 Tip:</strong> Pay attention to Java syntax rules - where do semicolons go? How are method calls structured? What's the proper order of keywords?
+                <strong>Tip:</strong> Pay attention to Java syntax rules - where do semicolons go? How are method calls structured? What's the proper order of keywords?
+            </div>
+            
+            <div class="url-tip">
+                <strong>For Teachers:</strong> You can link directly to a problem set by adding <code>?problemSet=filename.json</code> to this page's URL.<br>
+                Example: <code>yoursite.com/jumbler.html?problemSet=java_basics_chapter1.json</code>
             </div>
         </div>
         
@@ -315,10 +335,12 @@
                     <option value="calculator">Simple Calculator</option>
                 </select>
             </div>
-            <div class="load-section">
-                <label for="problem-set-url">Load Problem Set from URL: </label>
-                <input type="url" id="problem-set-url" placeholder="https://example.com/problems.json">
-                <button class="btn load-btn" id="load-btn">Load</button>
+            <div class="problem-set-section">
+                <label for="problem-set-select">Problem Set: </label>
+                <select id="problem-set-select">
+                    <option value="">Built-in Problems</option>
+                </select>
+                <button class="btn load-btn" id="load-set-btn">Load Set</button>
             </div>
         </div>
         
@@ -401,6 +423,7 @@
         let originalLines = [];
         let jumbledLines = [];
         let correctAnswers = [];
+        let isLoadingFromUrl = false;
         
         // Initialize the application
         function init() {
@@ -416,10 +439,133 @@
             document.getElementById('show-directions').addEventListener('click', showDirections);
             
             // Problem set loading functionality
-            document.getElementById('load-btn').addEventListener('click', loadProblemSet);
+            document.getElementById('load-set-btn').addEventListener('click', loadSelectedSet);
             
-            // Load the default program
-            loadProgram();
+            // Load available problem sets
+            loadProblemSetIndex();
+            
+            // Check for URL parameters to preload a problem set
+            checkForUrlParameters();
+            
+            // Load the default program (unless URL params are being processed)
+            if (!isLoadingFromUrl) {
+                loadProgram();
+            }
+        }
+        
+        // Check for URL parameters and auto-load problem set if specified
+        function checkForUrlParameters() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const problemSetFile = urlParams.get('problemSet');
+            
+            if (problemSetFile) {
+                // Set flag to prevent loading default program immediately
+                isLoadingFromUrl = true;
+                
+                // Auto-load the problem set from filename
+                loadProblemSetFromUrl(problemSetFile).then(() => {
+                    isLoadingFromUrl = false;
+                }).catch((error) => {
+                    isLoadingFromUrl = false;
+                    showMessage(`Error loading problem set from URL: ${error.message}`, 'error');
+                    loadProgram(); // Fall back to default
+                });
+            }
+        }
+        
+        // Load the index of available problem sets
+        async function loadProblemSetIndex() {
+            try {
+                const response = await fetch('index.json');
+                if (response.ok) {
+                    const indexData = await response.json();
+                    populateProblemSetDropdown(indexData.problemSets);
+                }
+            } catch (error) {
+                // If index.json doesn't exist, that's fine - we'll just use built-in problems
+                console.log('No index.json found, using built-in problems only');
+            }
+        }
+        
+        // Populate the problem set dropdown
+        function populateProblemSetDropdown(problemSets) {
+            const select = document.getElementById('problem-set-select');
+            
+            problemSets.forEach(set => {
+                const option = document.createElement('option');
+                option.value = set.filename;
+                option.textContent = set.title;
+                select.appendChild(option);
+            });
+        }
+        
+        // Load the selected problem set from the dropdown
+        async function loadSelectedSet() {
+            const select = document.getElementById('problem-set-select');
+            const filename = select.value;
+            
+            if (!filename) {
+                // Reset to built-in problems
+                programs = { ...defaultPrograms };
+                updateProgramDropdown();
+                showMessage('Switched to built-in problems', 'success');
+                loadProgram();
+                return;
+            }
+            
+            showMessage('Loading problem set...', 'loading');
+            
+            try {
+                await loadProblemSetFromUrl(filename);
+            } catch (error) {
+                showMessage(`Error loading problem set: ${error.message}`, 'error');
+            }
+        }
+        
+        // Load problem set from URL (refactored for reuse)
+        async function loadProblemSetFromUrl(url) {
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
+            }
+            
+            const data = await response.json();
+            
+            // Validate the JSON structure
+            if (!data.problemSet || !data.problemSet.problems || !Array.isArray(data.problemSet.problems)) {
+                throw new Error('Invalid problem set format. Expected problemSet.problems array.');
+            }
+            
+            // Clear existing programs and add defaults
+            programs = { ...defaultPrograms };
+            
+            // Add loaded problems
+            data.problemSet.problems.forEach(problem => {
+                if (problem.id && problem.title && problem.code && Array.isArray(problem.code)) {
+                    programs[problem.id] = {
+                        id: problem.id,
+                        title: problem.title,
+                        description: problem.description || '',
+                        difficulty: problem.difficulty || 'unknown',
+                        code: problem.code
+                    };
+                }
+            });
+            
+            // Update the dropdown
+            updateProgramDropdown();
+            
+            // Show success message
+            const problemCount = data.problemSet.problems.length;
+            showMessage(`Successfully loaded ${problemCount} problems from "${data.problemSet.title || 'Problem Set'}"`, 'success');
+            
+            // Load the first program from the set
+            const firstProblem = Object.keys(programs).find(key => key !== 'helloWorld' && key !== 'simpleLoop' && key !== 'calculator');
+            if (firstProblem) {
+                document.getElementById('program-select').value = firstProblem;
+                loadProgram();
+            }
         }
         
         // Hide the directions
@@ -606,7 +752,7 @@
             
             if (correct === total) {
                 resultsDiv.className = 'results success';
-                resultsDiv.innerHTML = `🎉 Perfect! You got all ${total} lines correct!`;
+                resultsDiv.innerHTML = `Perfect! You got all ${total} lines correct!`;
             } else {
                 resultsDiv.className = 'results partial';
                 resultsDiv.innerHTML = `You got ${correct} out of ${total} lines correct. Keep trying!`;
@@ -637,69 +783,6 @@
             
             programSelect.selectedIndex = nextIndex;
             loadProgram();
-        }
-        
-        // Load problem set from URL
-        async function loadProblemSet() {
-            const urlInput = document.getElementById('problem-set-url');
-            const url = urlInput.value.trim();
-            
-            if (!url) {
-                showMessage('Please enter a URL', 'error');
-                return;
-            }
-            
-            // Show loading indicator
-            showMessage('Loading problem set...', 'loading');
-            
-            try {
-                const response = await fetch(url);
-                
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
-                }
-                
-                const data = await response.json();
-                
-                // Validate the JSON structure
-                if (!data.problemSet || !data.problemSet.problems || !Array.isArray(data.problemSet.problems)) {
-                    throw new Error('Invalid problem set format. Expected problemSet.problems array.');
-                }
-                
-                // Clear existing programs and add defaults
-                programs = { ...defaultPrograms };
-                
-                // Add loaded problems
-                data.problemSet.problems.forEach(problem => {
-                    if (problem.id && problem.title && problem.code && Array.isArray(problem.code)) {
-                        programs[problem.id] = {
-                            id: problem.id,
-                            title: problem.title,
-                            description: problem.description || '',
-                            difficulty: problem.difficulty || 'unknown',
-                            code: problem.code
-                        };
-                    }
-                });
-                
-                // Update the dropdown
-                updateProgramDropdown();
-                
-                // Show success message
-                const problemCount = data.problemSet.problems.length;
-                showMessage(`Successfully loaded ${problemCount} problems from "${data.problemSet.title || 'Problem Set'}"`, 'success');
-                
-                // Load the first program from the set
-                const firstProblem = Object.keys(programs).find(key => key !== 'helloWorld' && key !== 'simpleLoop' && key !== 'calculator');
-                if (firstProblem) {
-                    document.getElementById('program-select').value = firstProblem;
-                    loadProgram();
-                }
-                
-            } catch (error) {
-                console.error('Error loading problem set:', error);
-                showMessage(`Error loading problem set: ${error.message}`, 'error');
-            }
         }
         
         // Update the program dropdown with current programs
@@ -740,9 +823,9 @@
                                              type === 'success' ? 'success-message' : 'loading-indicator'}`;
             messageDiv.textContent = message;
             
-            // Insert after the load section
-            const loadSection = document.querySelector('.load-section');
-            loadSection.parentNode.insertBefore(messageDiv, loadSection.nextSibling);
+            // Insert after the problem set section
+            const problemSetSection = document.querySelector('.problem-set-section');
+            problemSetSection.parentNode.insertBefore(messageDiv, problemSetSection.nextSibling);
             
             // Auto-hide success and loading messages after 3 seconds
             if (type === 'success' || type === 'loading') {
