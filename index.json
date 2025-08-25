@@ -14,6 +14,11 @@
       "filename": "jumble_03.json",
       "title": "Java Algorithms - Chapter 3",
       "description": "Linear search, accumulators, basic functions, and algorithmic thinking exercises based on Pawnee Parks Department theme"
+    },
+    {
+      "filename": "jumble_04.json",
+      "title": "Java Functions - Chapter 4",
+      "description": "Function creation, parameters, return values, and string manipulation exercises based on Bob's Burgers theme"
     }
   ]
 }
