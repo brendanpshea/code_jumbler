@@ -19,6 +19,11 @@
       "filename": "jumble_04.json",
       "title": "Java Functions - Chapter 4",
       "description": "Function creation, parameters, return values, and string manipulation exercises based on Bob's Burgers theme"
+    },
+    {
+      "filename": "jumble_05.json",
+      "title": "Java Casting, Nulls, and 2D Arrays - Chapter 5",
+      "description": "Casting, null handling, 2D arrays, and built-in libraries exercises based on Springfield Elementary theme"
     }
   ]
 }
