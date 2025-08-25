@@ -24,6 +24,11 @@
       "filename": "jumble_05.json",
       "title": "Java Casting, Nulls, and 2D Arrays - Chapter 5",
       "description": "Casting, null handling, 2D arrays, and built-in libraries exercises based on Springfield Elementary theme"
+    },
+    {
+      "filename": "jumble_06.json",
+      "title": "Java Collections - Chapter 6",
+      "description": "Dynamic data structures including ArrayList, LinkedList, HashSet, HashMap, and Collections utilities with music theme"
     }
   ]
 }

@@ -14,7 +14,7 @@
           "    public static void main(String[] args) {",
           "        // Create a decimal variable for movie rating (8.7)",
           "        double rating = 8.7;",
-          "        // Convert rating to whole number using proper rounding",
+          "        // Convert rating to whole number of stars (out of 5) using proper rounding",
           "        int stars = (int) Math.round(rating / 2);",
           "        // Create a decimal variable for box office in billions (2.068)",
           "        double boxOffice = 2.068;",
