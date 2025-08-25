@@ -9,6 +9,11 @@
       "filename": "jumble_02.json",
       "title": "Java Control Structures & Arrays - Chapter 2",
       "description": "Conditionals, loops, arrays, and compound logic exercises based on Moe's Tavern theme"
+    },
+    {
+      "filename": "jumble_03.json",
+      "title": "Java Algorithms - Chapter 3",
+      "description": "Linear search, accumulators, basic functions, and algorithmic thinking exercises based on Pawnee Parks Department theme"
     }
   ]
 }
