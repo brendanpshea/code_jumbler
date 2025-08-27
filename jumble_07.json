@@ -1,0 +1,196 @@
+{
+  "problemSet": {
+    "title": "Java Object-Oriented Programming - Chapter 7", 
+    "description": "Classes, objects, constructors, encapsulation, and object interaction with RPG theme",
+    "version": "1.0",
+    "problems": [
+      {
+        "id": "simple_class",
+        "title": "Basic Monster Class",
+        "description": "Creating a class with fields and methods",
+        "difficulty": "beginner",
+        "code": [
+          "public class Monster {",
+          "    // Declare text field for monster name",
+          "    String name;",
+          "    // Declare whole number field for health points",
+          "    int health;",
+          "    // Create method that returns nothing and takes no parameters",
+          "    void roar() {",
+          "        // Display monster name with roar message",
+          "        System.out.println(name + \" roars!\");",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "creating_objects",
+        "title": "Monster Creation",
+        "description": "Creating instances and setting fields",
+        "difficulty": "beginner",
+        "code": [
+          "public class MonsterTest {",
+          "    public static void main(String[] args) {",
+          "        // Create new Monster object using new keyword",
+          "        Monster goblin = new Monster();",
+          "        // Set name field to Goblin",
+          "        goblin.name = \"Goblin\";",
+          "        // Set health field to 30",
+          "        goblin.health = 30;",
+          "        // Call the roar method on the goblin object",
+          "        goblin.roar();",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "constructor_basic",
+        "title": "Simple Constructor",
+        "description": "Creating constructor with parameters",
+        "difficulty": "beginner",
+        "code": [
+          "public class Monster {",
+          "    String name;",
+          "    int health;",
+          "    // Create constructor with text name and whole number health parameters",
+          "    Monster(String name, int health) {",
+          "        // Assign name parameter to this object's name field",
+          "        this.name = name;",
+          "        // Assign health parameter to this object's health field", 
+          "        this.health = health;",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "private_fields",
+        "title": "Encapsulation with Private Fields",
+        "description": "Using private fields and public methods",
+        "difficulty": "intermediate",
+        "code": [
+          "public class Monster {",
+          "    // Declare private text field for name",
+          "    private String name;",
+          "    // Declare private whole number field for health",
+          "    private int health;",
+          "    // Create public method that returns the name field",
+          "    public String getName() {",
+          "        // Return the name field value",
+          "        return name;",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "getters_setters",
+        "title": "Health Management",
+        "description": "Creating getter and setter methods",
+        "difficulty": "intermediate",
+        "code": [
+          "public class Monster {",
+          "    private int health;",
+          "    // Create public getter method that returns health",
+          "    public int getHealth() {",
+          "        // Return the health field value",
+          "        return health;",
+          "    }",
+          "    // Create public setter method with health parameter",
+          "    public void setHealth(int health) {",
+          "        // Assign parameter to this object's health field",
+          "        this.health = health;",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "object_interaction",
+        "title": "Monster Battle",
+        "description": "Objects calling methods on other objects",
+        "difficulty": "intermediate",
+        "code": [
+          "public class Monster {",
+          "    private String name;",
+          "    private int health;",
+          "    // Create public method that takes damage amount parameter",
+          "    public void takeDamage(int damage) {",
+          "        // Subtract damage from current health",
+          "        health = health - damage;",
+          "        // Display name and remaining health",
+          "        System.out.println(name + \" health: \" + health);",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "arraylist_objects",
+        "title": "Monster Collection",
+        "description": "Using ArrayList to store objects",
+        "difficulty": "intermediate",
+        "code": [
+          "import java.util.ArrayList;",
+          "public class Dungeon {",
+          "    public static void main(String[] args) {",
+          "        // Create ArrayList that stores Monster objects",
+          "        ArrayList<Monster> monsters = new ArrayList<>();",
+          "        // Add new Monster with name Goblin and health 30",
+          "        monsters.add(new Monster(\"Goblin\", 30));",
+          "        // Add new Monster with name Orc and health 50",
+          "        monsters.add(new Monster(\"Orc\", 50));",
+          "        // Display total number of monsters",
+          "        System.out.println(\"Monsters: \" + monsters.size());",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "tostring_override",
+        "title": "Monster Description",
+        "description": "Overriding toString method",
+        "difficulty": "intermediate", 
+        "code": [
+          "public class Monster {",
+          "    private String name;",
+          "    private int health;",
+          "    // Override toString method using annotation",
+          "    @Override",
+          "    // Create public toString method that returns text",
+          "    public String toString() {",
+          "        // Return formatted string with name and health",
+          "        return name + \" [HP=\" + health + \"]\";",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "comprehensive_class",
+        "title": "Complete Character Class",
+        "description": "Combining all OOP concepts",
+        "difficulty": "advanced",
+        "code": [
+          "public class Character {",
+          "    private String name;",
+          "    private int gold;",
+          "    // Create constructor with name and gold parameters",
+          "    Character(String name, int gold) {",
+          "        // Assign name parameter using this keyword",
+          "        this.name = name;",
+          "        // Assign gold parameter using this keyword",
+          "        this.gold = gold;",
+          "    }",
+          "    // Create public method to spend gold with amount parameter",
+          "    public void spendGold(int amount) {",
+          "        // Subtract amount from current gold",
+          "        gold = gold - amount;",
+          "    }",
+          "    // Override toString method",
+          "    @Override",
+          "    public String toString() {",
+          "        // Return formatted string with name and gold",
+          "        return name + \" has \" + gold + \" gold\";",
+          "    }",
+          "}"
+        ]
+      }
+    ]
+  }
+}

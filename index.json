@@ -29,6 +29,11 @@
       "filename": "jumble_06.json",
       "title": "Java Collections - Chapter 6",
       "description": "Dynamic data structures including ArrayList, LinkedList, HashSet, HashMap, and Collections utilities with music theme"
+    },
+    {
+      "filename": "jumble_07.json",
+      "title": "Java Object-Oriented Programming - Chapter 7",
+      "description": "Classes, objects, constructors, encapsulation, and object interaction with RPG theme"
     }
   ]
 }
