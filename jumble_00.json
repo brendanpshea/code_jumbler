@@ -1,0 +1,146 @@
+{
+  "problemSet": {
+    "title": "Java Hour of Java - Chapter 0",
+    "description": "Very simple introduction to Java basics: printing, variables, input, and basic logic",
+    "version": "1.0",
+    "problems": [
+      {
+        "id": "hello_world",
+        "title": "First Java Program",
+        "description": "The classic Hello World program",
+        "difficulty": "beginner",
+        "code": [
+          "// Create a public class named HelloWorld",
+          "public class HelloWorld {",
+          "    // Create the main method where program starts",
+          "    public static void main(String[] args) {",
+          "        // Print the text Hello World",
+          "        System.out.println(\"Hello World\");",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "simple_variables",
+        "title": "Using Variables",
+        "description": "Creating and using different types of variables",
+        "difficulty": "beginner",
+        "code": [
+          "public class SimpleVariables {",
+          "    public static void main(String[] args) {",
+          "        // Create a text variable with value Java",
+          "        String language = \"Java\";",
+          "        // Create a number variable with value 25",
+          "        int year = 25;",
+          "        // Print the language variable",
+          "        System.out.println(language);",
+          "        // Print the year variable",
+          "        System.out.println(year);",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "basic_math",
+        "title": "Simple Calculator",
+        "description": "Doing basic math operations",
+        "difficulty": "beginner",
+        "code": [
+          "public class BasicMath {",
+          "    public static void main(String[] args) {",
+          "        // Create first number variable with value 10",
+          "        int num1 = 10;",
+          "        // Create second number variable with value 5",
+          "        int num2 = 5;",
+          "        // Add the two numbers together",
+          "        int sum = num1 + num2;",
+          "        // Print the result",
+          "        System.out.println(sum);",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "user_input",
+        "title": "Getting User Input",
+        "description": "Reading input from the user",
+        "difficulty": "beginner",
+        "code": [
+          "import java.util.Scanner;",
+          "public class UserInput {",
+          "    public static void main(String[] args) {",
+          "        // Create Scanner object to read input",
+          "        Scanner input = new Scanner(System.in);",
+          "        // Ask user for their name",
+          "        System.out.print(\"Enter name: \");",
+          "        // Read the name they type",
+          "        String name = input.nextLine();",
+          "        // Print hello with their name",
+          "        System.out.println(\"Hello \" + name);",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "simple_if",
+        "title": "Making Decisions",
+        "description": "Using if statements to make choices",
+        "difficulty": "beginner",
+        "code": [
+          "public class SimpleIf {",
+          "    public static void main(String[] args) {",
+          "        // Create age variable with value 18",
+          "        int age = 18;",
+          "        // Check if age is 18 or higher",
+          "        if (age >= 18) {",
+          "            // Print adult message",
+          "            System.out.println(\"Adult\");",
+          "        } else {",
+          "            // Print child message",
+          "            System.out.println(\"Child\");",
+          "        }",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "simple_loop",
+        "title": "Counting with Loops",
+        "description": "Using for loops to repeat actions",
+        "difficulty": "beginner",
+        "code": [
+          "public class SimpleLoop {",
+          "    public static void main(String[] args) {",
+          "        // Create loop that counts from 1 to 3",
+          "        for (int i = 1; i <= 3; i++) {",
+          "            // Print the current number",
+          "            System.out.println(i);",
+          "        }",
+          "        // Print done message",
+          "        System.out.println(\"Done\");",
+          "    }",
+          "}"
+        ]
+      },
+      {
+        "id": "simple_method",
+        "title": "Creating Methods",
+        "description": "Writing reusable code with methods",
+        "difficulty": "beginner",
+        "code": [
+          "public class SimpleMethod {",
+          "    // Create method that prints hello",
+          "    public static void sayHello() {",
+          "        // Print hello message",
+          "        System.out.println(\"Hello\");",
+          "    }",
+          "    public static void main(String[] args) {",
+          "        // Call the sayHello method",
+          "        sayHello();",
+          "    }",
+          "}"
+        ]
+      }
+    ]
+  }
+}

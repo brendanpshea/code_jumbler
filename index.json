@@ -1,6 +1,11 @@
 {
   "problemSets": [
     {
+      "filename": "jumble_00.json",
+      "title": "Hour of Java - Chapter 0",
+      "description": "Introduction to Java programming concepts"
+    },
+    {
       "filename": "jumble_01.json",
       "title": "Java Basics - Chapter 1",
       "description": "Variables, data types, and basic operations"
