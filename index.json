@@ -50,5 +50,11 @@
       "title": "Java Exceptions - Chapter 9",
       "description": "Exception handling basics: try-catch-finally, throw, throws, and custom exceptions with banking theme"
     }
+    ,
+    {
+      "filename": "jumble_10.json",
+      "title": "Java Streams & Lambdas - Chapter 10",
+      "description": "Lambda expressions, stream operations, filtering, mapping, and functional programming exercises"
+    }
   ]
 }
